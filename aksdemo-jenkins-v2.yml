@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: aksdemo-jenkins
+  name: aksdemo-jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aksdemo-jenkins
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: aksdemo-jenkins
+    spec:
+      containers:
+      - image: mljmsacr.azurecr.io/aksdemo-jenkins:v2
+        name: aksdemo-jenkins
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: aksdemo-jenkins
+  name: aksdemo-jenkins
+spec:
+  ports:
+  - name: 80-8080
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: aksdemo-jenkins
+  type: LoadBalancer
+status:
+  loadBalancer: {}
