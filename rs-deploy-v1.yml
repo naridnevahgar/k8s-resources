@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: rs-deploy
+  name: rs-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rs-deploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: rs-deploy
+    spec:
+      containers:
+      - image: mljmsacr.azurecr.io/rs-deploy:v1
+        name: rs-deploy
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: rs-deploy
+  name: rs-deploy
+spec:
+  ports:
+  - name: 80-8080
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: rs-deploy
+  type: LoadBalancer
+status:
+  loadBalancer: {}
