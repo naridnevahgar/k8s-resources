@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: rs-jenkins
+  name: rs-jenkins
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rs-jenkins
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: rs-jenkins
+    spec:
+      containers:
+      - image: mljmsacr.azurecr.io/rs-jenkins:v1
+        name: rs-jenkins
+        resources: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: rs-jenkins
+  name: rs-jenkins
+spec:
+  ports:
+  - name: 80-8080
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: rs-jenkins
+  type: LoadBalancer
+status:
+  loadBalancer: {}
